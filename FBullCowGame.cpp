@@ -9,7 +9,7 @@ int FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameWon; }
 
-std::string FBullCowGame::GetHiddenWord(int DifficultySelected)
+std::string FBullCowGame::GetHiddenWord(const int& DifficultySelected)
 {
 	// Create vector of words, word size dependent on DifficultySelected, will return a random string from vector for HiddenWord
 	std::ifstream FromIsogram("isograms.txt");
@@ -36,7 +36,7 @@ std::string FBullCowGame::GetHiddenWord(int DifficultySelected)
 	return MyHiddenWord;
 }
 
-int FBullCowGame::GetMaxTries(int) const
+int FBullCowGame::GetMaxTries() const
 {
 	std::map <int, int> WordLengthToMaxTries
 	{
@@ -68,7 +68,7 @@ void FBullCowGame::Reset()
 }
 
 
-EInputStatus FBullCowGame::CheckInputValidity(std::string PlayerInput) const
+EInputStatus FBullCowGame::CheckInputValidity(const std::string& PlayerInput) const
 {
 	if (PlayerInput == "!help")
 	{
@@ -155,7 +155,7 @@ FBullCowCount FBullCowGame::SubmitValidGuess(const std::string& Guess)
 	return BullCowCount;
 }
 
-bool FBullCowGame::IsIsogram(std::string Guess) const
+bool FBullCowGame::IsIsogram(const std::string& Guess) const
 {
 	// Treat 0 and 1 letter words as isograms
 	if (Guess.length() <= 1) { return true; }
@@ -164,36 +164,36 @@ bool FBullCowGame::IsIsogram(std::string Guess) const
 	for (auto Letter : Guess)
 	{
 		Letter = tolower(Letter);
-		if (LetterSeen[Letter]) { return false; }
-		else { LetterSeen[Letter] = true; }
+		if (LetterSeen[Letter]) 
+			return false;
+		else 
+			LetterSeen[Letter] = true;
 	}
 
 	return true;
 }
 
-bool FBullCowGame::IsLowercase(std::string Guess) const
+bool FBullCowGame::IsLowercase(const std::string& Guess) const
 {
 	for (auto Letter : Guess)
-	{
-		if (islower(Letter) == false) { return false; }
-	}
+		if (islower(Letter) == false)
+			return false;
+	
 	return true;
 }
 
-bool FBullCowGame::IsLettersOnly(std::string Guess) const
+bool FBullCowGame::IsLettersOnly(const std::string& Guess) const
 {
 	for (auto Letter : Guess)
-	{
-		if (isalpha(Letter) == false) { return false; }
-	}
+		if (isalpha(Letter) == false)
+			return false;
+	
 	return true;
 }
 
-void FBullCowGame::GiveHint() const
+void FBullCowGame::GiveHint()
 {
 	std::string FirstHiddenLetter{ MyHiddenWord[0] };
 	std::string LastHiddenLetter{ MyHiddenWord[GetHiddenWordLength() - 1] };
 	std::cout << "HINT: Your word begins with " << FirstHiddenLetter << " and ends in " << LastHiddenLetter << ".\n\n";
-
-	return;
 }
