@@ -65,7 +65,6 @@ void FBullCowGame::Reset()
 
 	std::string MyHiddenWord{};
 	MyCurrentTry = 1;
-	return;
 }
 
 
@@ -118,7 +117,7 @@ std::string FBullCowGame::PrintGameSummary()
 }
 
 // Receives a valid guess, increments turn, and returns count
-FBullCowCount FBullCowGame::SubmitValidGuess(std::string Guess)
+FBullCowCount FBullCowGame::SubmitValidGuess(const std::string& Guess)
 {
 	MyCurrentTry++;
 	FBullCowCount BullCowCount;
