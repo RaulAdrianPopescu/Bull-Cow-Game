@@ -5,11 +5,11 @@
 FBullCowGame::FBullCowGame() { Reset(); }
 
 
-int FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
+int FBullCowGame::GetCurrentTry() { return MyCurrentTry; }
 int FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
-bool FBullCowGame::IsGameWon() const { return bGameWon; }
+bool FBullCowGame::IsGameWon() { return bGameWon; }
 
-std::string FBullCowGame::GetHiddenWord(const int& DifficultySelected)
+void FBullCowGame::GetHiddenWord(int DifficultySelected)
 {
 	// Create vector of words, word size dependent on DifficultySelected, will return a random string from vector for HiddenWord
 	std::ifstream FromIsogram("isograms.txt");
@@ -18,11 +18,12 @@ std::string FBullCowGame::GetHiddenWord(const int& DifficultySelected)
 	do
 	{
 		FromIsogram >> WordFromList;
+
 		if (WordFromList.size() == DifficultySelected)
-		{
 			SelectedWords.push_back(WordFromList);
-		}
-		else { WordFromList.clear(); }
+		else
+			WordFromList.clear();
+
 	} while (!FromIsogram.eof());
 	// Close file and shrink vector to fit chosen words
 	FromIsogram.close();
@@ -32,11 +33,9 @@ std::string FBullCowGame::GetHiddenWord(const int& DifficultySelected)
 	srand(time(NULL));
 	MyHiddenWord = SelectedWords[rand() % SelectedWords.size()];
 	SelectedWords.clear();
-
-	return MyHiddenWord;
 }
 
-int FBullCowGame::GetMaxTries() const
+int FBullCowGame::GetMaxTries()
 {
 	std::map <int, int> WordLengthToMaxTries
 	{
@@ -68,7 +67,7 @@ void FBullCowGame::Reset()
 }
 
 
-EInputStatus FBullCowGame::CheckInputValidity(const std::string& PlayerInput) const
+EInputStatus FBullCowGame::CheckInputValidity(std::string& PlayerInput)
 {
 	if (PlayerInput == "!help")
 	{
@@ -117,7 +116,7 @@ std::string FBullCowGame::PrintGameSummary()
 }
 
 // Receives a valid guess, increments turn, and returns count
-FBullCowCount FBullCowGame::SubmitValidGuess(const std::string& Guess)
+FBullCowCount FBullCowGame::SubmitValidGuess(std::string& Guess)
 {
 	MyCurrentTry++;
 	FBullCowCount BullCowCount;

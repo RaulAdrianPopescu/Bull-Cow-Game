@@ -35,24 +35,23 @@ enum class EInputStatus
 class FBullCowGame
 {
 public:
-	FBullCowGame();
 
-	int GetMaxTries() const;
-	int GetCurrentTry() const;
-	std::string GetHiddenWord(const int& DifficultySelected) const;
+	FBullCowGame();
+	int GetMaxTries();
+	int GetCurrentTry();
+	void GetHiddenWord(int DifficultySelected);
 	int GetHiddenWordLength() const;
-	bool IsGameWon() const;
-	EInputStatus CheckInputValidity(const std::string& PlayerInput) const;
+	bool IsGameWon();
+	EInputStatus CheckInputValidity(std::string& PlayerInput);
 	std::string PrintGameSummary();
 	void GiveHint();
 	void Reset();
-	FBullCowCount SubmitValidGuess(const std::string& Guess);
-
+	FBullCowCount SubmitValidGuess(std::string& Guess);
 
 private:
+
 	int MyCurrentTry;
 	std::string MyHiddenWord;
-
 	bool bGameWon;
 	bool IsIsogram(const std::string& Guess) const;
 	bool IsLowercase(const std::string& Guess) const;

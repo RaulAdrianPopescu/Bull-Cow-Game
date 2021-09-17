@@ -28,7 +28,7 @@ int main()
 ///// is NOT won and there are still tries remaining 
 void PlayGame()
 {
-	while (!BCGame.IsGameWon() && BCGame.GetCurrentTry() <= BCGame.GetMaxTries(BCGame.GetHiddenWordLength()))
+	while ((!BCGame.IsGameWon()) && BCGame.GetCurrentTry() <= BCGame.GetMaxTries())
 	{
 		BCGame.GiveHint();
 		std::string Guess{ GetValidGuess() };
@@ -69,7 +69,7 @@ std::string GetValidGuess()
 	while (true)
 	{
 		int CurrentTry{ BCGame.GetCurrentTry() };
-		int MaxTries{ BCGame.GetMaxTries(BCGame.GetHiddenWordLength()) };
+		int MaxTries{ BCGame.GetMaxTries() };
 
 		std::cout << "Try " << CurrentTry << " of " << MaxTries << ". What is your guess? ";
 		std::getline(std::cin, Guess);
